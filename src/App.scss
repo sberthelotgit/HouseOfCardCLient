@@ -1,0 +1,31 @@
+.app {
+  display: grid;
+  grid-template-areas:
+    "topbar"
+    "content";
+  grid-template-rows: "auto auto 1fr";
+  height: 100%;
+  width: 100%;
+
+  &.with-toolbar {
+    grid-template-areas:
+      "topbar"
+      "toolbar"
+      "content";
+  }
+
+  .topbar {
+    grid-area: topbar;
+  }
+
+  .toolbar {
+    grid-area: toolbar;
+  }
+
+  .content {
+    grid-area: content;
+    padding: 1rem;
+    overflow: auto;
+    height: 100%;
+  }
+}

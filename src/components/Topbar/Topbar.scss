@@ -1,0 +1,13 @@
+.topbar {
+    display: flex;
+    height: 65px;
+    align-items: center;
+    background: linear-gradient(0deg, rgb(22, 22, 22) 0%, rgb(2, 2, 26) 100%);
+    padding: 0 1rem;
+
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+}

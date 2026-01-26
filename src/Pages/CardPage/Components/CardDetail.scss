@@ -1,0 +1,25 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: rgba(26, 25, 25, 0.8);
+    border-radius: 8px;
+    box-shadow: 6px 4px 6px rgba(240, 239, 239, 0.1);
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-bottom: #555353 1px solid;
+    }
+
+    .card-title,
+    .card-detail {
+        padding: 0.5rem;
+    }
+
+    .card-detail {
+        font-size: 1rem;
+        color: #807d7d;
+        min-height: 100px;
+    }
+}
