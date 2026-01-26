@@ -3,11 +3,13 @@
   grid-template-areas:
     "topbar"
     "content";
-  grid-template-rows: "auto auto 1fr";
+  grid-template-rows: auto 1fr;
   height: 100%;
   width: 100%;
+  overflow: auto;
 
   &.with-toolbar {
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
       "topbar"
       "toolbar"
@@ -27,5 +29,6 @@
     padding: 1rem;
     overflow: auto;
     height: 100%;
+    overflow: auto;
   }
 }
