@@ -1,47 +1,30 @@
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { createCard, getCards, getCardTypes, updateCard } from "../../shared/api/card-api";
+import { updateCard } from "../../shared/api/card-api";
+import { cardMapAtom, cardTypesAtom, fetchDataAtom } from "../../shared/atoms/cards-atoms";
 import type { ICard } from "../../shared/model/card";
-import type { ICardType } from "../../shared/model/card-type";
 import "./CardPage.scss";
 import { CardColumn } from "./Components/CardColumn";
-import { CardDetail } from "./Components/CardDetail";
 
-type CardMap = Record<string, ICard[]>
 
-const insertCard = (map: CardMap, card: ICard): CardMap => {
-    if (!map[card.typeId!]) {
-        map[card.typeId!] = [];
-    }
-    map[card.typeId!].push(card);
-    return map;
-}
 
-const createCardMap = (card: ICard[]): CardMap => {
-    return card.reduce(insertCard, {} as CardMap);
-}
+
+
 
 export const CardPage: React.FC = () => {
-    const [cardTypes, setCardTypes] = useState<ICardType[]>([]);
-    const [cardMap, setCardMap] = useState<CardMap>({});
     const [dropTargetTypeId, setDropTargetTypeId] = useState<string | null>(null);
+    const [cardTypes] = useAtom(cardTypesAtom);
+    const [, setCardMap] = useAtom(cardMapAtom);
+    const [, loadData] = useAtom(fetchDataAtom);
 
     useEffect(() => {
-        getCardTypes().then(fetchedCardTypes => setCardTypes(fetchedCardTypes)).then(() =>
-            getCards()).then(fetchedCards => setCardMap(createCardMap(fetchedCards)))
-    }, [])
+        loadData();
+    }, [loadData]);
 
-    const handleAddCard = async (forTypeId: string) => {
-        const newCard = await createCard({ title: "New Card", detail: "Card Detail", typeId: forTypeId })
-        setCardMap(cm => insertCard({ ...cm, [forTypeId]: [...cm[forTypeId]] }, newCard))
 
-    }
 
-    const handleCardChange = (card: ICard): void => {
-        updateCard(card);
-    }
 
     const handleCardDragEnd = (card: ICard): void => {
-        console.log('Hello  ', dropTargetTypeId)
         if (dropTargetTypeId && dropTargetTypeId !== card.typeId) {
             const oldTypeId = card.typeId;
             card.typeId = dropTargetTypeId;
@@ -60,7 +43,6 @@ export const CardPage: React.FC = () => {
     }
 
     const handleDropTargetTypeIdChange = (typeId: string): void => {
-        console.log('Hello  ', dropTargetTypeId)
         setDropTargetTypeId(typeId);
     }
 
@@ -68,18 +50,10 @@ export const CardPage: React.FC = () => {
     return <div className="card-page">
         {cardTypes.map(ct =>
             <CardColumn
+                type={ct}
                 key={ct.id}
-                name={ct.name}
-                onAddCard={() => handleAddCard(ct.id!)}
-                onDragEnter={() => handleDropTargetTypeIdChange(ct.id!)} >
-
-                {cardMap[ct.id!]?.map(c =>
-                    <CardDetail
-                        key={c.id} card={c}
-                        onCardChanged={handleCardChange}
-                        onDragEnd={() => handleCardDragEnd(c)} />
-                )}
-
+                onDragEnter={() => handleDropTargetTypeIdChange(ct.id!)}
+                onDragEnd={(c) => handleCardDragEnd(c)} >
             </CardColumn>
         )}
     </div>
