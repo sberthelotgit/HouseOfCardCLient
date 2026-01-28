@@ -4,10 +4,23 @@
     align-items: center;
     background: linear-gradient(0deg, rgb(22, 22, 22) 0%, rgb(2, 2, 26) 100%);
     padding: 0 1rem;
-
+    justify-content: space-between;
 
     .title {
         font-size: 1.5rem;
         font-weight: bold;
+    }
+
+    .user-action {
+        display: flex;
+        gap: 1rem;
+
+        a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+
+
+        }
     }
 }

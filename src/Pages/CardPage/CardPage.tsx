@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { updateCard } from "../../shared/api/card-api";
 import { cardMapAtom, cardTypesAtom, fetchDataAtom } from "../../shared/atoms/cards-atoms";
@@ -14,8 +14,8 @@ import { CardColumn } from "./Components/CardColumn";
 export const CardPage: React.FC = () => {
     const [dropTargetTypeId, setDropTargetTypeId] = useState<string | null>(null);
     const [cardTypes] = useAtom(cardTypesAtom);
-    const [, setCardMap] = useAtom(cardMapAtom);
-    const [, loadData] = useAtom(fetchDataAtom);
+    const setCardMap = useSetAtom(cardMapAtom);
+    const loadData = useSetAtom(fetchDataAtom);
 
     useEffect(() => {
         loadData();

@@ -1,8 +1,7 @@
 import { useState } from 'react'
+import { Outlet } from 'react-router'
 import './App.scss'
-import { Toolbar } from './components/Toolbar/Toolbar'
 import { Topbar } from './components/Topbar/Topbar'
-import { CardPage } from './Pages/CardPage/CardPage'
 
 function App() {
   const [showToolbar] = useState(false)
@@ -10,12 +9,10 @@ function App() {
   return (
     <div className={`app ${showToolbar ? "with-toolbar" : ""}`} >
       <Topbar />
-      <Toolbar />
       <div className="content">
-        <CardPage />
+        <Outlet />
       </div>
     </div>
-
   )
 }
 
